@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import "./home.css"
+import "./Header.css"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from "react-router-dom";
@@ -18,6 +19,15 @@ const Home = () => {
 
     return (
         <>
+            <div className="header">
+            <div className="headerLeft">
+                <Link to="/home"><img className="header__icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/2560px-IMDB_Logo_2016.svg.png" /></Link>
+                <Link to="/movies/popular" style={{textDecoration: "none"}}><span>Popular</span></Link>
+                <Link to="/movies/top_rated" style={{textDecoration: "none"}}><span>Top Rated</span></Link>
+                <Link to="/movies/upcoming" style={{textDecoration: "none"}}><span>Upcoming</span></Link>
+                <Link to="/" style={{textDecoration: "none", paddingLeft: 600}}><span>Logout</span></Link>
+            </div>
+        </div>
             <div className="poster">
                 <Carousel
                     showThumbs={false}
