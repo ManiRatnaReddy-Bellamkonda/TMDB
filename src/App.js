@@ -6,8 +6,10 @@ import Signup from './page/Signup/Signup';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 import MovieList from './component/movieList/movieList';
+import MovieList1 from './component/movieList/SearchMovieList';
 import Home from './page/home/home';
 import Movie from './page/movieDetail/movie';
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
             <Route path="/signup" element = { <Signup/> }></Route>
             <Route path="movie/:id" element={<Movie />}></Route>
             <Route path="movies/:type" element = {<MovieList />}></Route>
+            <Route path="mov/:search" element = {<MovieList1 />}></Route>
             <Route path="/*" element={<h1 > Error Page</h1>}></Route>
         </Routes>
      </Router>
