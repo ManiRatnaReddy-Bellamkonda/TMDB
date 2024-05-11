@@ -3,13 +3,15 @@ import "./home.css"
 import "./Header.css"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MovieList from "../../component/movieList/movieList";
 
 
 const Home = () => {
-
+    const history=useNavigate();
     const [ popularMovies, setPopularMovies ] = useState([])
+    const [search,setSearch]=useState('');
+
 
     useEffect(() => {
         fetch("https://api.themoviedb.org/3/movie/popular?api_key=7e83857727f0ae529a5a7188be7f3eea&language=en-US")
@@ -17,15 +19,65 @@ const Home = () => {
         .then(data => setPopularMovies(data.results))
     }, [])
 
+    const lo = (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        history("/");
+    };
+
+
+    async function submit(e){
+        e.preventDefault();
+
+        try{
+            
+             const s = "";
+            
+            localStorage.setItem("s", search);
+          
+            let si = localStorage.getItem("s");
+            console.log(si);
+
+           
+            history("/mov/search");
+
+        }
+        catch(e){
+            console.log(e);
+
+        }
+
+    }
+
     return (
         <>
             <div className="header">
             <div className="headerLeft">
                 <Link to="/home"><img className="header__icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/2560px-IMDB_Logo_2016.svg.png" /></Link>
                 <Link to="/movies/popular" style={{textDecoration: "none"}}><span>Popular</span></Link>
-                <Link to="/movies/top_rated" style={{textDecoration: "none"}}><span>Top Rated</span></Link>
+                <Link to="/movies/top_rated" style={{textDecoration: "none"}}><span>TopRated</span></Link>
                 <Link to="/movies/upcoming" style={{textDecoration: "none"}}><span>Upcoming</span></Link>
-                <Link to="/" style={{textDecoration: "none", paddingLeft: 600}}><span>Logout</span></Link>
+                <form action="POST" style={ {marginLeft: 450}}>
+                <input onChange={(e) => { setSearch(e.target.value) }}     style={{
+        padding: "5px",
+        borderRadius: "5px",
+        border: "1px solid #ced4da",
+        width: "150px" // Adjust width as needed
+       // Optional margin bottom for spacing
+    }} placeholder="Search Movie"  />  
+                <input  type="submit" value="Search" style={{
+        cursor: "pointer",
+        backgroundColor: "#f3ce13",
+        color: "black",
+        paddingLeft: "5px",
+        paddingRight: "5px",
+        paddingTop:"5px",
+        paddingBottom:"5px",
+        borderRadius: "5px"
+    }} onClick={submit}  />
+            </form>
+                <Link to="/" onClick={lo} style={{textDecoration: "none"}}><span>Logout</span></Link>
+                
             </div>
         </div>
             <div className="poster">
@@ -57,7 +109,7 @@ const Home = () => {
                         ))
                     }
                 </Carousel>
-                <MovieList />
+              
              
             </div>
         </>
